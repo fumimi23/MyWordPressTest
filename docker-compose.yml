@@ -1,6 +1,7 @@
 services:
   db:
-    image: mysql:8.0.27
+    image: mysql:latest
+    platform: linux/amd64
     command: '--default-authentication-plugin=mysql_native_password'
     volumes:
       - db_data:/var/lib/mysql
@@ -15,6 +16,7 @@ services:
       - 33060
   wordpress:
     image: wordpress:latest
+    platform: linux/amd64
     volumes:
       - wp_data:/var/www/html
     ports:
