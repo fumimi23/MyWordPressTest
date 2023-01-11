@@ -1,0 +1,15 @@
+{
+    "version": 2,
+    "settings": {
+        "custom": {
+            "fruit": "apple"
+        },
+        "blocks": {
+            "core/paragraph": {
+                "custom": {
+                    "fruit": "pear"
+                }
+            }
+        }
+    }
+}
