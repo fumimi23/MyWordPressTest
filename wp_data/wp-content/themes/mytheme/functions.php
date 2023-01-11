@@ -53,3 +53,12 @@ function custom_taxonomy_cat()
     );
 }
 add_action('init', 'custom_taxonomy_cat');
+
+/* ---------- ブロックテーマサポートの追加 ---------- */
+if (! function_exists('mytheme_setup')) {
+    function mytheme_setup()
+    {
+        add_theme_support('wp-block-styles');
+    }
+}
+add_action('after_setup_theme', 'mytheme_setup');
