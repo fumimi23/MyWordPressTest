@@ -21,38 +21,15 @@ function create_post_type()
             'title',  // タイトル
             'editor', // エディター
             'thumbnail', // アイキャッチ画像
+            'excerpt',  // 抜粋
+            'custom-fields', // カスタムフィールド
             'revisions' // リビジョンの保存
           ),
+          'taxonomies' => array('category'), // 使用するタクソノミー
         )
     );
 }
 add_action('init', 'create_post_type');
-
-/* ---------- カスタムタクソノミー（カテゴリー）の追加 ---------- */
-function custom_taxonomy_cat()
-{
-    register_taxonomy( // カスタムタクソノミーの追加関数
-        'naming', // カテゴリーの名前（半角英数字の小文字）
-        'FY2023',     // タグを追加したいカスタム投稿タイプ
-        array(      // オプション（以下
-          'label' => 'ネーム', // 表示名称
-          'public' => true, // 管理画面に表示するかどうかの指定
-          'hierarchical' => true, // 階層を持たせるかどうか
-          'show_in_rest' => true, // REST APIの有効化。ブロックエディタの有効化。
-        )
-    );
-    register_taxonomy( // カスタムタクソノミーの追加関数
-        'completed_manuscript', // カテゴリーの名前（半角英数字の小文字）
-        'FY2023',     // タグを追加したいカスタム投稿タイプ
-        array(      // オプション（以下
-          'label' => '本稿', // 表示名称
-          'public' => true, // 管理画面に表示するかどうかの指定
-          'hierarchical' => true, // 階層を持たせるかどうか
-          'show_in_rest' => true, // REST APIの有効化。ブロックエディタの有効化。
-        )
-    );
-}
-add_action('init', 'custom_taxonomy_cat');
 
 /* ---------- ブロックテーマサポートの追加 ---------- */
 if (! function_exists('mytheme_setup')) {
@@ -62,3 +39,11 @@ if (! function_exists('mytheme_setup')) {
     }
 }
 add_action('after_setup_theme', 'mytheme_setup');
+
+function get_all_posts($query)
+{
+    if ($query->is_main_query()) {
+        $query->set('post_type', 'any');
+    }
+}
+add_action('pre_get_posts', 'get_all_posts');
