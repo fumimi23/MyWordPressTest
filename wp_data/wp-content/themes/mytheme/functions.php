@@ -39,3 +39,11 @@ if (! function_exists('mytheme_setup')) {
     }
 }
 add_action('after_setup_theme', 'mytheme_setup');
+
+function get_all_posts($query)
+{
+    if ($query->is_main_query()) {
+        $query->set('post_type', 'any');
+    }
+}
+add_action('pre_get_posts', 'get_all_posts');
